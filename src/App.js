@@ -36,13 +36,13 @@ class App extends React.Component {
 
   createItem = (e) => {
     // hit enter to input
-    if (e.target.key === "Enter") {
+    if (e.key === "Enter") {
       // check input value if empty
       // TODO:
-      // if (e.target.value.trim() === "") {
-      //   alert("Please do not enter EMPTY value");
-      //   return false;
-      // }
+      if (e.target.value.trim() === "") {
+        alert("Please do not enter EMPTY value");
+        return false;
+      }
 
       const newTodos = [...this.state.todos];
       const randomId = Math.floor(Math.random() * 1000000) + 1;
