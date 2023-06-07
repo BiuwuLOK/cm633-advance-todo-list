@@ -39,7 +39,7 @@ class App extends React.Component {
     if (e.target.key === "Enter") {
       // check input value if empty
       // TODO:
-      if (e.target.value == "") {
+      if (e.target.value === "") {
         alert("Please do not enter EMPTY value");
         return false;
       }
