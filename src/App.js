@@ -39,13 +39,13 @@ class App extends React.Component {
     if (e.target.key === "Enter") {
       // check input value if empty
       // TODO:
-      if (e.target.value === "") {
-        alert("Please do not enter EMPTY value");
-        return false;
-      }
+      // if (e.target.value.trim() === "") {
+      //   alert("Please do not enter EMPTY value");
+      //   return false;
+      // }
 
       const newTodos = [...this.state.todos];
-      const randomId = Math.floor(Math.random() * 1000000);
+      const randomId = Math.floor(Math.random() * 1000000) + 1;
       newTodos.push({
         id: randomId,
         title: this.state.newItemTitle,
@@ -70,7 +70,7 @@ class App extends React.Component {
             placeholder="Type something..."
             value={this.state.newItemTitle}
             onChange={this.inputHandler}
-            onKeyUp={this.createItem}
+            onKeyDown={this.createItem}
           />
           <ul>
             {this.state.todos.map((todo) => {
