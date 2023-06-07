@@ -9,7 +9,7 @@ class App extends React.Component {
   };
 
   clickHandler = (todoId, shouldDelete) => {
-    const newTodos = [...this.state.todos];
+    let newTodos = [...this.state.todos];
 
     if (!shouldDelete) {
       // toggle the state of the item
