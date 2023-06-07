@@ -78,7 +78,7 @@ class App extends React.Component {
                 <li
                   onClick={(e) => {
                     console.log(e);
-                    this.clickHandler(todo.id, e.ctrlKey);
+                    this.clickHandler(todo.id, e.altKey);
                   }}
                   key={todo.id}
                   className={`p-6 text-3xl transition border-b border-slate-100 hover:bg-blue-500 hover:text-white cursor-pointer bg-slate-200 text-slate-600
