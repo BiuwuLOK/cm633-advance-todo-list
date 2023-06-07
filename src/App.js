@@ -1,25 +1,98 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Todo } from "./component/todo";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    todos: [],
+    newItemTitle: "",
+  };
+
+  clickHandler = (todoId, shouldDelete) => {
+    const newTodos = [...this.state.todos];
+
+    if (!shouldDelete) {
+      // toggle the state of the item
+      const target = newTodos.find((todo) => {
+        return todo.id === todoId;
+      });
+      target.done = !target.done;
+    } else {
+      // perform delete action
+      newTodos = this.state.todos.filter((todo) => {
+        return todo.id !== todoId;
+      });
+    }
+    this.setState({
+      todos: newTodos,
+    });
+  };
+
+  inputHandler = (e) => {
+    this.setState({
+      newItemTitle: e.target.value,
+    });
+  };
+
+  createItem = (e) => {
+    // hit enter to input
+    if (e.target.key === "Enter" && e.target.value !== "") {
+      // check input value if empty
+
+      const newTodos = [...this.state.todos];
+      const randomId = Math.floor(Math.random() * 1000000);
+      newTodos.push({
+        id: randomId,
+        title: this.state.newItemTitle,
+        done: false,
+      });
+
+      this.setState({
+        todos: newTodos,
+        newItemTitle: "",
+      });
+    } else {
+      // TODO:
+      if (e.target.value == "") {
+        alert("Please do not enter EMPTY value");
+        return false;
+      }
+    }
+  };
+
+  render() {
+    return (
+      <div className="min-h-screen w-full bg-slate-100 flex justify-center items-center">
+        <div className="bg-white flex-1 max-w-md rounded-xl shadow-xl overflow-hidden mx-4 ">
+          <input
+            type="text"
+            className="bg-slate-600 text-white p-6 w-full outline-none text-3xl"
+            placeholder="Type something..."
+            value={this.state.newItemTitle}
+            onChange={this.inputHandler}
+            onKeyUp={this.createItem}
+          />
+          <ul>
+            {this.state.todos.map((todo) => {
+              return (
+                <li
+                  onClick={(e) => {
+                    console.log(e);
+                    this.clickHandler(todo.id, e.shiftKey);
+                  }}
+                  key={todo.id}
+                  className={`p-6 text-3xl transition border-b border-slate-100 hover:bg-blue-500 hover:text-white cursor-pointer bg-slate-200 text-slate-600
+                  ${todo.done ? "line-through" : ""}`}
+                >
+                  {todo.title}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
